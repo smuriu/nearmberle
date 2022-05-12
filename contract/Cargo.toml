@@ -1,0 +1,23 @@
+[package]
+name = "nearmberle"
+version = "0.1.0"
+edition = "2021"
+authors = ["Njenga Muriu <smuriu@tuta.io>"]
+
+[dependencies]
+near-sdk = "4.0.0-pre.7"
+near-contract-standards = "4.0.0-pre.7"
+rand = "0.8.5"
+ulid = "0.5.0"
+getrandom = { version = "0.2", features = ["js"] }
+
+[lib]
+crate-type = ["cdylib"]
+
+[profile.release]
+codegen-units = 1
+opt-level = "z"
+lto = true
+debug = false
+panic = "abort"
+overflow-checks = true
