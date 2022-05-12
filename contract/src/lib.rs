@@ -20,14 +20,14 @@ mod tests {
 
   const ONE_NEAR: u128 = u128::pow(10, 24);
 
-  fn contract_account() -> AccountId {
-    "contract".parse::<AccountId>().unwrap()
+  fn test_account() -> AccountId {
+    "example.testnet".parse::<AccountId>().unwrap()
   }
 
   fn get_context(predecessor_account_id: AccountId) -> VMContextBuilder {
     let mut builder = VMContextBuilder::new();
     builder
-      .current_account_id(contract_account())
+      .current_account_id(test_account())
       .account_balance(15 * ONE_NEAR)
       .signer_account_id(predecessor_account_id.clone())
       .predecessor_account_id(predecessor_account_id);
@@ -35,8 +35,8 @@ mod tests {
   }
 
   #[test]
-  fn test() {
-    let context = get_context(contract_account());
+  fn at_the_end_of_the_game_there_are_stats() {
+    let context = get_context(test_account());
     testing_env!(context.build());
     let mut game = Contract::new();
 
@@ -61,6 +61,11 @@ mod tests {
       }
     }
 
-    println!("{:?}", game.get_stats());
+    let maybe_stats = game.get_stats();
+    if let Some(stats) = maybe_stats {
+      println!("{:?}", stats);
+      return;
+    }
+    panic!("No stats")
   }
 }
