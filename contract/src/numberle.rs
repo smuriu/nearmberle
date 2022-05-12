@@ -101,20 +101,3 @@ impl Numberle {
     self.status.clone()
   }
 }
-
-#[cfg(test)]
-mod tests {
-  // use crate::numberle::Numberle;
-  use super::*;
-
-  #[test]
-  fn attempt() {
-    let mut puzzle = Numberle::new();
-    println!("{:?}", puzzle.attempt("12*9=108"));
-    println!("{:?}", puzzle.attempt("5*6+9=39"));
-    println!("{:?}", puzzle.attempt("12*9=108"));
-    println!("{:?}", puzzle.attempt("99+9=108"));
-    println!("{:?}", puzzle.attempt("9*9/3=27"));
-    println!("{:?}", puzzle.attempt("12*9=108"));
-  }
-}

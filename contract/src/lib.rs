@@ -1,15 +1,7 @@
-/* use near_sdk::{
-  borsh::{self, *},
-  collections::*,
-  json_types::*,
-  serde::{self, *},
-  *,
-}; */
+mod contract;
 mod generator;
 mod numberle;
-// mod utils;
 
-mod contract;
 pub use contract::*;
 
 #[cfg(test)]

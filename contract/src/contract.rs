@@ -5,12 +5,6 @@ use near_sdk::serde::{Deserialize, Serialize};
 use near_sdk::*;
 use ulid::Ulid;
 
-/* #[derive(BorshStorageKey, BorshSerialize)]
-enum StorageKey {
-  ActiveGames,
-  PlayerStats
-} */
-
 #[derive(BorshDeserialize, BorshSerialize, Deserialize, Serialize, Debug)]
 #[serde(crate = "near_sdk::serde")]
 pub struct PlayerStats {
@@ -61,7 +55,6 @@ impl Contract {
         streak: 0,
       },
     };
-    //let mut stats = self.player_stats.get(&player).unwrap();
     stats.played += 1;
 
     if let PuzzleStatus::Solved { attempts: _ } = puzzle_status {
@@ -83,7 +76,7 @@ impl Contract {
         attempts: _,
         hint: _,
       } = status
-      {
+      { // update storage
         self.active_games.insert(key, &game);
       } else {
         self.active_games.remove(key);
