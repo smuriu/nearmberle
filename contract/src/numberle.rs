@@ -28,7 +28,7 @@ fn score(submission: &str, equation: &str) -> [u8; PUZZLE_LENGTH] {
   scores
 }
 
-#[derive(BorshDeserialize, BorshSerialize, Serialize, Deserialize, Clone, Debug)]
+#[derive(BorshDeserialize, BorshSerialize, Serialize, Deserialize, Clone, Debug, PartialEq)]
 #[serde(crate = "near_sdk::serde")]
 pub enum PuzzleStatus {
   Playing {
@@ -99,5 +99,29 @@ impl Numberle {
 
   pub fn get_status(&self) -> PuzzleStatus {
     self.status.clone()
+  }
+}
+
+mod tests {
+  use super::*;
+
+  #[test]
+  fn attempt_on_active_game_produces_some_status() {
+    let mut game = Numberle::new();
+    let status = game.attempt("10/0=NaN");
+    assert_ne!(status, None);
+  }
+
+  #[test]
+  fn no_more_than_6_attempts_per_game() {
+    let mut game = Numberle::new();
+    game.attempt("11/0=NaN");
+    game.attempt("12/0=NaN");
+    game.attempt("13/0=NaN");
+    game.attempt("14/0=NaN");
+    game.attempt("15/0=NaN");
+    game.attempt("16/0=NaN");
+    let status = game.attempt("10/0=NaN");
+    assert_eq!(status, None);
   }
 }

@@ -152,6 +152,8 @@ mod tests {
 
   #[test]
   fn it_generates_8_characters() {
-    assert_eq!(equation_generator().gen_equation().chars().count(), 8);
+    let equation = equation_generator().gen_equation();
+    println!("{}", equation);
+    assert_eq!(equation.chars().count(), 8);
   }
 }
