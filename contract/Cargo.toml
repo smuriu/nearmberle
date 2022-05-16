@@ -5,11 +5,9 @@ edition = "2021"
 authors = ["Njenga Muriu <smuriu@tuta.io>"]
 
 [dependencies]
-near-sdk = "4.0.0-pre.7"
-near-contract-standards = "4.0.0-pre.7"
-rand = "0.8.5"
-ulid = "0.5.0"
-getrandom = { version = "0.2", features = ["js"] }
+near-sdk = "4.0.0-pre.9"
+near-contract-standards = "4.0.0-pre.9"
+ran = "0.3.0"
 
 [lib]
 crate-type = ["cdylib"]

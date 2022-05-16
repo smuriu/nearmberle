@@ -26,6 +26,7 @@ mod tests {
     builder
   }
 
+  // TODO: rewrite as simulation test
   #[test]
   fn at_the_end_of_the_game_there_are_stats() {
     let context = get_context(test_account());

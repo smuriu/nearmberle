@@ -3,9 +3,14 @@ use near_sdk::borsh::{self, *};
 use near_sdk::collections::{LookupMap, UnorderedMap};
 use near_sdk::serde::{Deserialize, Serialize};
 use near_sdk::*;
-use ulid::Ulid;
 
-#[derive(BorshDeserialize, BorshSerialize, Deserialize, Serialize, Debug)]
+#[derive(BorshSerialize, BorshStorageKey)]
+enum StorageKey {
+  GAME,
+  STAT,
+}
+
+#[derive(BorshDeserialize, BorshSerialize, Deserialize, Serialize, Debug, Default)]
 #[serde(crate = "near_sdk::serde")]
 pub struct PlayerStats {
   played: usize,
@@ -25,13 +30,13 @@ impl Contract {
   #[init]
   pub fn new() -> Self {
     Self {
-      active_games: LookupMap::new(b"a".to_vec()),
-      player_stats: UnorderedMap::new(b"s".to_vec()),
+      active_games: LookupMap::new(StorageKey::GAME),
+      player_stats: UnorderedMap::new(StorageKey::STAT),
     }
   }
 
   pub fn hit_me(&mut self) -> String {
-    let game_id = Ulid::new().to_string();
+    let game_id = env::block_timestamp().to_string();
     let puzzle = Numberle::new();
     self.active_games.insert(&game_id, &puzzle);
     game_id.clone()
@@ -49,18 +54,15 @@ impl Contract {
     let player = env::predecessor_account_id().to_string();
     let mut stats = match self.player_stats.get(&player) {
       Some(prior_stats) => prior_stats,
-      _ => PlayerStats {
-        played: 0,
-        solved: 0,
-        streak: 0,
-      },
+      _ => PlayerStats::default(),
     };
     stats.played += 1;
 
     if let PuzzleStatus::Solved { attempts: _ } = puzzle_status {
       stats.solved += 1;
       stats.streak += 1;
-    } else { // PuzzleStatus::Failed
+    } else {
+      // PuzzleStatus::Failed
       stats.streak = 0;
     }
     self.player_stats.insert(&player, &stats);
@@ -76,7 +78,8 @@ impl Contract {
         attempts: _,
         hint: _,
       } = status
-      { // update storage
+      {
+        // update storage
         self.active_games.insert(key, &game);
       } else {
         self.active_games.remove(key);

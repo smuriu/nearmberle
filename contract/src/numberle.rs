@@ -3,7 +3,6 @@ use near_sdk::{
   borsh::{self, *},
   env,
   serde::{Deserialize, Serialize},
-  AccountId,
 };
 
 const PUZZLE_LENGTH: usize = 8;
@@ -46,26 +45,27 @@ pub enum PuzzleStatus {
 
 #[derive(BorshDeserialize, BorshSerialize)]
 pub struct Numberle {
-  player_id: AccountId,
+  player_id: String,
   equation: String,
   status: PuzzleStatus,
 }
 
 impl Numberle {
   pub fn new() -> Self {
-    let equation = equation_generator().gen_equation();
-    let hint: [u8; PUZZLE_LENGTH] = [0, 0, 0, 0, 0, 0, 0, 0];
     Self {
-      player_id: env::predecessor_account_id(),
-      equation,
-      status: PuzzleStatus::Playing { attempts: 0, hint },
+      player_id: env::predecessor_account_id().to_string(),
+      equation: equation_generator().gen_equation(),
+      status: PuzzleStatus::Playing {
+        attempts: 0,
+        hint: [0, 0, 0, 0, 0, 0, 0, 0],
+      },
     }
   }
 
   pub fn attempt(&mut self, submission: &str) -> Option<PuzzleStatus> {
     assert_eq!(
       self.player_id,
-      env::predecessor_account_id(),
+      env::predecessor_account_id().to_string(),
       "Only you can play your game"
     );
 
@@ -103,10 +103,9 @@ impl Numberle {
 }
 
 mod tests {
-  use super::*;
-
   #[test]
   fn attempt_on_active_game_produces_some_status() {
+    use super::*;
     let mut game = Numberle::new();
     let status = game.attempt("10/0=NaN");
     assert_ne!(status, None);
@@ -114,6 +113,7 @@ mod tests {
 
   #[test]
   fn no_more_than_6_attempts_per_game() {
+    use super::*;
     let mut game = Numberle::new();
     game.attempt("11/0=NaN");
     game.attempt("12/0=NaN");
