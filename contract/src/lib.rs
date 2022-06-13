@@ -54,7 +54,7 @@ mod tests {
       }
     }
 
-    let maybe_stats = game.get_stats();
+    let maybe_stats = game.stats_by_player("example.testnet".to_string());
     if let Some(stats) = maybe_stats {
       println!("{:?}", stats);
       return;

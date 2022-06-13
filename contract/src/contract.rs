@@ -35,6 +35,10 @@ impl Contract {
     }
   }
 
+  // TODO: make payable?
+  // at least enough for projected lifetime storage costs for stats,
+  // storage costs for active games
+  // TODO: also consider tournaments with a winner's pot
   pub fn hit_me(&mut self) -> String {
     let game_id = env::block_timestamp().to_string();
     let puzzle = Numberle::new();
@@ -89,8 +93,7 @@ impl Contract {
     None
   }
 
-  pub fn get_stats(&self) -> Option<PlayerStats> {
-    let player = env::predecessor_account_id().to_string();
-    self.player_stats.get(&player)
+  pub fn stats_by_player(&self, player_id: String) -> Option<PlayerStats> {
+    self.player_stats.get(&player_id)
   }
 }
