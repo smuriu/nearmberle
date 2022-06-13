@@ -7,9 +7,10 @@
     "preview": "nuxt preview"
   },
   "devDependencies": {
+    "near-api-js": "^0.45.1",
     "nuxt": "3.0.0-rc.3"
   },
   "dependencies": {
-    "vue-near": "^0.2.1"
+    "buffer": "^6.0.3"
   }
 }
