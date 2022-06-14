@@ -1,18 +1,7 @@
 import { Contract } from "near-api-js"
 
 export const useNearmberle = () => {
-  const { appTitle, contractName } = useRuntimeConfig().public.near
-
-  // () => useState('x')
-  function isSignedIn(): boolean {
-    const { $wallet } = useNuxtApp()
-    return $wallet.isSignedIn()
-  }
-
-  function signOut() {
-    const { $wallet } = useNuxtApp()
-    $wallet.signOut()
-  }
+  const { contractName } = useRuntimeConfig().public.near
 
   function loadContract(): Contract {
     const { $wallet } = useNuxtApp()
@@ -24,12 +13,6 @@ export const useNearmberle = () => {
         changeMethods: ["hit_me", "attempt"], // change methods modify state
       }
     )
-  }
-
-  async function signIn() {
-    const { $wallet } = useNuxtApp()
-    await $wallet.requestSignIn(contractName, appTitle)
-    // ?account_id=sosybuntu.testnet&public_key=ed25519:EieDHU1mKeh746rjKxYFF1E1gUaowZyBCBWJoyNVbQmB&all_keys=ed25519:9wzREQGTcnUi7dyAfbB8Qh1rkXKVPEDWNSTEs7Jy1qjb
   }
 
   async function start() {
@@ -56,5 +39,5 @@ export const useNearmberle = () => {
     console.log(response)
   }
 
-  return { isSignedIn, signIn, signOut, start, attempt, getStats }
+  return { start, attempt, getStats }
 }

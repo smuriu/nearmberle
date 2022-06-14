@@ -1,9 +1,5 @@
 <script setup lang="ts">
-const { isSignedIn, getStats } = useNearmberle()
-
-if (isSignedIn) {
-  getStats()
-}
+const { isSignedIn } = useNearAuth()
 </script>
 
 <template>
@@ -15,6 +11,6 @@ if (isSignedIn) {
       <a href="https://rust-lang.org/">Rust</a> for a bootcamp assignment for
       <a href="https://near.org/">NEAR</a>.
     </p>
-    <NuxtLink to="/game" role="button">Play game</NuxtLink>
+    <NuxtLink v-if="isSignedIn()" to="/game" role="button">Play game</NuxtLink>
   </section>
 </template>
