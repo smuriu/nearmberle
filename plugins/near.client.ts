@@ -1,4 +1,4 @@
-import { connect, keyStores, WalletConnection } from "near-api-js"
+import { connect, keyStores, Near, WalletConnection } from "near-api-js"
 
 // @see https://github.com/near/borsh-js/issues/48
 // and https://github.com/near/borsh-js/pull/50
@@ -21,17 +21,20 @@ export default defineNuxtPlugin(async ({ provide }) => {
   const near = await connect(config)
   const wallet = new WalletConnection(near, 'nmbl')
 
+  provide('near', near)
   provide('wallet', wallet)
 })
 
 declare module '#app' {
   interface NuxtApp {
+    $near: Near
     $wallet: WalletConnection
   }
 }
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
+    $near: Near
     $wallet: WalletConnection
   }
 }
