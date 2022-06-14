@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 
-set -e
-
 USERNAME=${1:-"vscode"}
 USER_UID=${2:-"1000"}
 USER_GID=${3:-"1000"}
+# export CARGO_HOME=${4:-"/usr/local/cargo"}
+# export RUSTUP_HOME=${5:-"/usr/local/rustup"}
 SCRIPT_DIR="$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)"
 MARKER_FILE="/usr/local/etc/vscode-dev-containers/common"
+
+set -e
 
 # Ensure that login shells get the correct path if the user updated the PATH using ENV.
 rm -f /etc/profile.d/00-restore-env.sh
@@ -32,26 +34,18 @@ fi
 group_name="${USERNAME}"
 if id -u ${USERNAME} >/dev/null 2>&1; then
   # User exists, update if needed
-  if [ "${USER_GID}" != "automatic" ] && [ "$USER_GID" != "$(id -g $USERNAME)" ]; then
+  if [ "$USER_GID" != "$(id -g $USERNAME)" ]; then
     group_name="$(id -gn $USERNAME)"
     groupmod --gid $USER_GID ${group_name}
     usermod --gid $USER_GID $USERNAME
   fi
-  if [ "${USER_UID}" != "automatic" ] && [ "$USER_UID" != "$(id -u $USERNAME)" ]; then
+  if [ "$USER_UID" != "$(id -u $USERNAME)" ]; then
     usermod --uid $USER_UID $USERNAME
   fi
 else
   # Create user
-  if [ "${USER_GID}" = "automatic" ]; then
-    groupadd $USERNAME
-  else
-    groupadd --gid $USER_GID $USERNAME
-  fi
-  if [ "${USER_UID}" = "automatic" ]; then
-    useradd -s /bin/bash --gid $USERNAME -m $USERNAME
-  else
-    useradd -s /bin/bash --uid $USER_UID --gid $USERNAME -m $USERNAME
-  fi
+  groupadd --gid $USER_GID $USERNAME
+  useradd -s /bin/bash --uid $USER_UID --gid $USERNAME -m $USERNAME
 fi
 
 # Add add sudo support for non-root user
@@ -60,6 +54,19 @@ if [ "${USERNAME}" != "root" ] && [ "${EXISTING_NON_ROOT_USER}" != "${USERNAME}"
   chmod 0440 /etc/sudoers.d/$USERNAME
   EXISTING_NON_ROOT_USER="${USERNAME}"
 fi
+
+# set permissions for future files and folders
+setfacl -dR -m u:"root":rwX -m u:"$USERNAME":rwX /usr/local/cargo
+setfacl -dR -m u:"root":rwX -m u:"$USERNAME":rwX /usr/local/rustup
+# set permissions on existing files and folders
+setfacl -R -m u:"root":rwX -m u:"$USERNAME":rwX /usr/local/cargo
+setfacl -R -m u:"root":rwX -m u:"$USERNAME":rwX /usr/local/rustup
+# if ! cat /etc/group | grep -e "^rustlang:" > /dev/null 2>&1; then
+#     groupadd -r rustlang
+# fi
+# usermod -a -G rustlang "${USERNAME}"
+# chown -R :rustlang "${RUSTUP_HOME}" "${CARGO_HOME}"
+# chmod -R g+r+w+s "${RUSTUP_HOME}" "${CARGO_HOME}"
 
 # ** Shell customization section **
 if [ "${USERNAME}" = "root" ]; then
@@ -244,12 +251,5 @@ updaterc() {
     echo -e "$1" >>/etc/bash.bashrc
   fi
 }
-
-# set permissions for future files and folders
-setfacl -dR -m u:"root":rwX -m u:"$USERNAME":rwX /usr/local/cargo
-setfacl -dR -m u:"root":rwX -m u:"$USERNAME":rwX /usr/local/rustup
-# set permissions on existing files and folders
-setfacl -R -m u:"root":rwX -m u:"$USERNAME":rwX /usr/local/cargo
-setfacl -R -m u:"root":rwX -m u:"$USERNAME":rwX /usr/local/rustup
 
 echo "Done!"
