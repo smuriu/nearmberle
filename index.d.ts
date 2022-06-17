@@ -12,4 +12,13 @@ declare type PuzzleStatus = {
   }
 }
 
-declare type GameState = [guess: string, hint: string][]
+declare type PlayerStats = {
+  played: number
+  solved: number
+  streak: number
+}
+
+declare type GameState = {
+  puzzleId: string
+  attempts: [submission: string, result: PuzzleStatus][]
+}

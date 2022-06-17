@@ -5,6 +5,10 @@ import { connect, keyStores, Near, WalletConnection } from "near-api-js"
 import { Buffer } from "buffer"
 globalThis.Buffer = Buffer
 
+// reference to process.env in https://github.com/near/near-api-js/blob/9e737e325c4b28ca59fc6245351be3b8ea54fe92/lib/account.js#L78
+// but not available in browser https://github.com/nuxt/framework/issues/2797
+globalThis.process.env = {}
+
 export default defineNuxtPlugin(async ({ provide }) => {
   const { network } = useRuntimeConfig().public.near
   const keyStore = new keyStores.BrowserLocalStorageKeyStore()

@@ -13,9 +13,6 @@
               <strong>NEARmberle</strong>
             </NuxtLink>
           </li>
-          <ClientOnly>
-            <WalletAuth />
-          </ClientOnly>
         </ul>
       </nav>
     </header>
