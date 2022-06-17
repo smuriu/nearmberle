@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import { useBusy } from '~~/composables/busy'
-
-const { state, attempt, start } = useNearmberle()
-const busy = useBusy()
+const { busy, state, attempt, start } = useNearmberle()
 
 const lastResult = computed(() => {
   const { attempts } = state.value

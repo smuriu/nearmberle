@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { useBusy } from '~~/composables/busy'
-
 const emit = defineEmits<{
   (event: 'guess', guess: string): void
 }>()
 
-const busy = useBusy()
+const { busy } = useNearmberle()
 const guess = ref('')
 
 const submitGuess = () => {

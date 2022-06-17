@@ -1,5 +1,4 @@
 import { Contract } from "near-api-js"
-import { useBusy } from "./busy"
 
 const loadContract = () => {
   const { contractName } = useRuntimeConfig().public.near
@@ -34,8 +33,9 @@ export const useNearmberle = () => {
     encode
   })
 
+  const busy = useState<boolean>('nmbl_busy', () => false)
+
   const toggleBusy = () => {
-    const busy = useBusy()
     busy.value = !busy.value
   }
 
@@ -94,5 +94,5 @@ export const useNearmberle = () => {
     return stats 
   }
 
-  return { state, start, attempt, getStats }
+  return { busy, state, start, attempt, getStats }
 }
