@@ -17,7 +17,7 @@ const lastResult = computed(() => {
 </script>
 
 <template>
-  <div v-if="state.puzzleId">
+  <div v-if="state">
     <h1>Game in progress</h1>
     <details>
       <summary><strong>Rules of the game</strong></summary>
