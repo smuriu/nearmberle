@@ -4,4 +4,4 @@ A [numberle](https://numberle.org/) parody as a smart contract on the NEAR Proto
 
 # Authors
 
-- Njenga Muriu <smuriu@tuta.io> [@smuriu](https://t.me/smuriu) (tg)
+- [@smuriu](https://t.me/smuriu)
