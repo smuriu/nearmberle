@@ -76,17 +76,22 @@ export const useNearmberle = () => {
   }
 
   async function getStats(): Promise<PlayerStats> {
-    const contract = loadContract()
-    const player_id = getAccountId()
-
-    // @ts-ignore
-    const stats = await contract.stats_by_player({ player_id })
-
-    return stats || {
+    let stats = {
       played: 0,
       solved: 0,
       streak: 0
     }
+
+    const { $wallet } = useNuxtApp()
+    if ($wallet.isSignedIn()) {
+      const contract = loadContract()
+      const player_id = getAccountId()
+
+      // @ts-ignore
+      stats = await contract.stats_by_player({ player_id })
+    }
+
+    return stats 
   }
 
   return { state, start, attempt, getStats }
