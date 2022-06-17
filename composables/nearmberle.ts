@@ -55,6 +55,7 @@ export const useNearmberle = () => {
   }
 
   async function attempt(submission: string) {
+    // TODO: add error-handling e.g. if playing non-existant game or not own game
     toggleBusy()
 
     const contract = loadContract()
@@ -88,7 +89,10 @@ export const useNearmberle = () => {
       const player_id = getAccountId()
 
       // @ts-ignore
-      stats = await contract.stats_by_player({ player_id })
+      const result = await contract.stats_by_player({ player_id })
+      if (result) {
+        stats = result
+      }
     }
 
     return stats 

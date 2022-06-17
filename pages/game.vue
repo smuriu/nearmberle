@@ -11,6 +11,9 @@ const lastResult = computed(() => {
 
   return null
 })
+
+// TODO: add auth middleware
+// challenge: presently, auth is only on browser-side
 </script>
 
 <template>
