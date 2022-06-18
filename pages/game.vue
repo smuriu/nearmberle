@@ -12,8 +12,13 @@ const lastResult = computed(() => {
   return null
 })
 
-// TODO: add auth middleware
-// challenge: presently, auth is only on browser-side
+// poor man's browser-side auth
+onMounted(() => {
+  const { isSignedIn } = useNearAuth()
+  if (!isSignedIn()) {
+    throwError('unauthenticated')
+  }
+})
 </script>
 
 <template>
