@@ -22,7 +22,7 @@ export const useNearAuth = () => {
     $wallet.requestSignIn(contractName, appTitle/* , successUrl */)
   }
 
-  async function signOut() {
+  function signOut() {
     const { $wallet } = useNuxtApp()
     const { state } = useNearmberle()
 
