@@ -22,12 +22,18 @@ export const useNearAuth = () => {
     $wallet.requestSignIn(contractName, appTitle/* , successUrl */)
   }
 
-  function signOut() {
-    const nuxt = useNuxtApp()
-    const { $wallet } = nuxt
+  async function signOut() {
+    const { $wallet } = useNuxtApp()
+    const { state } = useNearmberle()
+
+    // abandons current game
+    state.value = null
     $wallet.signOut()
-    const event = useRequestEvent(nuxt)
-    deleteCookie(event, 'nmbl_state')
+
+    /* useRouter().push({
+      path: '/',
+      force: true
+    }) */
     window.location.reload()
   }
 

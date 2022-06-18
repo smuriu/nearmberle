@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const { getAccountId, signIn, signOut } = useNearAuth()
+const { getAccountId, isSignedIn, signIn, signOut } = useNearAuth()
 const { getStats } = useNearmberle()
 
 const { data: stats } = await useAsyncData('player', async () => {
@@ -14,7 +14,7 @@ const play = () => {
 </script>
 
 <template>
-  <article v-if="playerId">
+  <article v-if="isSignedIn()">
     <header>{{ playerId }}</header>
     <pre>
       <code>{{ stats }}</code>
