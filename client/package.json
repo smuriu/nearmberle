@@ -8,11 +8,11 @@
   },
   "devDependencies": {
     "@picocss/pico": "^1.5.3",
-    "near-api-js": "^0.45.1",
-    "nuxt": "^3.0.0-rc.4",
     "nuxt-windicss": "^2.4.2"
   },
   "dependencies": {
-    "buffer": "^6.0.3"
+    "buffer": "^6.0.3",
+    "near-api-js": "^0.45.1",
+    "nuxt": "^3.0.0-rc.4"
   }
 }
