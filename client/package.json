@@ -8,7 +8,9 @@
   },
   "devDependencies": {
     "@picocss/pico": "^1.5.3",
-    "nuxt-windicss": "^2.4.2"
+    "daisyui": "^2.18.0",
+    "nuxt-windicss": "^2.4.2",
+    "windicss": "^3.5.6"
   },
   "dependencies": {
     "buffer": "^6.0.3",

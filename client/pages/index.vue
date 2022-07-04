@@ -9,7 +9,9 @@
       <a href="https://near.org/">NEAR protocol</a>.
     </p>
     <ClientOnly>
-      <Player />
+      <WalletComponent>
+        <Player />
+      </WalletComponent>
     </ClientOnly>
   </section>
 </template>

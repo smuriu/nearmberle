@@ -3,9 +3,9 @@ defineProps({
   state: Object as () => GameState,
 })
 const hintMap = {
-  0: 'bg-gray-600 text-white',
-  1: 'bg-yellow-400 text-black',
-  2: 'bg-green-700 text-white',
+  0: 'bg-neutral text-neutral-content',
+  1: 'bg-warning text-warning-content',
+  2: 'bg-success text-success-content',
 }
 const description = {
   0: 'is not in the word.',
@@ -31,21 +31,23 @@ const letterText = (result: PuzzleStatus, index: number): string => {
 </script>
 
 <template>
-  <article>
-    <header>Game #{{ state.puzzleId }}</header>
-    <ul>
-      <li v-for="[submission, result] in state.attempts" class="flex gap-1">
-        <span v-for="(letter, i) in submission" class="block w-6 h-6 text-center font-bold uppercase"
-          :class="letterClasses(result, i)">
-          {{ letter }}
-          <span class="sr-only">
-            {{ letterText(result, i) }}
-          </span>
-        </span>
-      </li>
-    </ul>
-    <footer>
-      <slot />
-    </footer>
-  </article>
+  <div class="card bg-neutral text-neutral-content shadow-xl">
+    <div class="card-body items-center text-center">
+      <h2 class="card-title">Game #{{ state.puzzleId }}</h2>
+      <ul>
+        <li v-if="state.attempts.length > 0" v-for="[submission, result] in state.attempts" class="flex gap-1">
+          <kbd v-for="(letter, i) in submission" class="tooltip kbd" :data-tip="letterText(result, i)"
+            :class="letterClasses(result, i)">
+            {{ letter }}
+          </kbd>
+        </li>
+        <li v-else class="italic">
+          Make your first guess
+        </li>
+      </ul>
+      <div class="card-actions">
+        <slot />
+      </div>
+    </div>
+  </div>
 </template>
