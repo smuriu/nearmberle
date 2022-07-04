@@ -9,12 +9,13 @@
   "devDependencies": {
     "@picocss/pico": "^1.5.3",
     "daisyui": "^2.18.0",
+    "nuxt": "^3.0.0-rc.4",
     "nuxt-windicss": "^2.4.2",
-    "windicss": "^3.5.6"
+    "windicss": "^3.5.6",
+    "vue": "^3.2.37"
   },
   "dependencies": {
     "buffer": "^6.0.3",
-    "near-api-js": "^0.45.1",
-    "nuxt": "^3.0.0-rc.4"
+    "near-api-js": "^0.45.1"
   }
 }
