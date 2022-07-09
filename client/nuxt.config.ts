@@ -11,7 +11,5 @@ export default defineNuxtConfig({
       }
     }
   },
-  // ssr: false,
-  css: ['@picocss/pico/css/pico.css'],
   modules: ['nuxt-windicss']
 })

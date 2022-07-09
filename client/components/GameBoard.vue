@@ -20,10 +20,10 @@ const letterClasses = (result: PuzzleStatus, index: number): string => {
 
   return classes
 }
-const letterText = (result: PuzzleStatus, index: number): string => {
+const letterText = (submission: string, result: PuzzleStatus, index: number): string => {
   let text = ''
   if (result.Playing) {
-    text = description[result.Playing.hint[index]]
+    text = `${submission[index]} ${description[result.Playing.hint[index]]}`
   }
 
   return text
@@ -34,17 +34,18 @@ const letterText = (result: PuzzleStatus, index: number): string => {
   <div class="card bg-neutral text-neutral-content shadow-xl">
     <div class="card-body items-center text-center">
       <h2 class="card-title">Game #{{ state.puzzleId }}</h2>
-      <ul>
-        <li v-if="state.attempts.length > 0" v-for="[submission, result] in state.attempts" class="flex gap-1">
-          <kbd v-for="(letter, i) in submission" class="tooltip kbd" :data-tip="letterText(result, i)"
-            :class="letterClasses(result, i)">
-            {{ letter }}
-          </kbd>
-        </li>
-        <li v-else class="italic">
-          Make your first guess
-        </li>
-      </ul>
+      <div v-if="state.attempts.length > 0" class="flex flex-col gap-1">
+        <div v-for="[submission, result] in state.attempts" class="flex gap-1">
+          <div v-for="(letter, i) in submission" class="tooltip" :data-tip="letterText(submission, result, i)">
+            <kbd class="kbd" :class="letterClasses(result, i)">
+              {{ letter }}
+            </kbd>
+          </div>
+        </div>
+      </div>
+      <div v-else>
+        <span class="italic">Make your first guess</span>
+      </div>
       <div class="card-actions">
         <slot />
       </div>

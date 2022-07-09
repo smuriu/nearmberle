@@ -11,7 +11,8 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <button :disabled="disabled" :aria-busy="busy" @click.stop="emit('kbd_input', value)" class="kbd" type="button">{{
-      value
-  }}</button>
+  <button class="btn btn-outline basis-1/5" type="button" :disabled="disabled" :class="busy ? 'loading' : ''"
+    @click.stop="emit('kbd_input', value)">{{
+        value
+    }}</button>
 </template>

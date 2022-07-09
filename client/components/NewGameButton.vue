@@ -6,5 +6,5 @@ const { busy } = useNearmberle()
 </script>
 
 <template>
-  <button class="btn btn-primary" :aria-busy="busy" @click="emit('start')">New Game</button>
+  <button class="btn btn-primary" :class="busy ? 'loading' : ''" @click="emit('start')">New Game</button>
 </template>

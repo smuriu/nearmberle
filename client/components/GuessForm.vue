@@ -28,11 +28,14 @@ const kbdBackspace = () => {
 <template>
   <form @submit.prevent="submitGuess">
     <div class="flex flex-col">
-      <label>
-        Your guess
-        <input v-model="guess" type="text" minlength="8" maxlength="8"
-          class="font-bold uppercase tracking-widest text-black bg-white" />
-      </label>
+      <div class="form-control w-full mb-2">
+        <label class="label">
+          <span class="label-text">Your guess</span>
+        </label>
+        <input v-model="guess" type="text" minlength="8" maxlength="8" placeholder="eg. 12+34=46"
+          class="input input-bordered input-lg w-full" />
+      </div>
+
       <div class="flex flex-col">
         <div class="flex justify-center gap-1 my-1 w-full">
           <KbdButton :disabled="kbdInputDisabled" :busy="busy" :value="1" @kbd_input="onKbdInput" />
@@ -56,8 +59,10 @@ const kbdBackspace = () => {
           <KbdButton :disabled="kbdInputDisabled" :busy="busy" :value="'='" @kbd_input="onKbdInput" />
         </div>
         <div class="flex justify-center gap-1 my-1 w-full">
-          <button :disabled="guess.length === 0" :aria-busy="busy" class="kbd" @click.stop="kbdBackspace" type="button">⇐</button>
-          <button :disabled="guess.length !== 8" :aria-busy="busy" type="submit" class="kbd">Guess</button>
+          <button :disabled="guess.length === 0" class="btn btn-outline basis-1/3" :class="busy ? 'loading' : ''"
+            @click.stop="kbdBackspace" type="button">⇐</button>
+          <button :disabled="guess.length !== 8" type="submit" class="btn btn-outline btn-primary basis-2/3"
+            :class="busy ? 'loading' : ''">Guess</button>
         </div>
       </div>
     </div>

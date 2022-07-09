@@ -1,7 +1,6 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@picocss/pico': ^1.5.3
   buffer: ^6.0.3
   daisyui: ^2.18.0
   near-api-js: ^0.45.1
@@ -15,7 +14,6 @@ dependencies:
   near-api-js: 0.45.1
 
 devDependencies:
-  '@picocss/pico': 1.5.3
   daisyui: 2.18.0_ugi4xkrfysqkt4c4y6hkyfj344
   nuxt: 3.0.0-rc.4_rollup@2.75.7+vite@2.9.13
   nuxt-windicss: 2.4.2_rollup@2.75.7+vite@2.9.13
@@ -673,10 +671,6 @@ packages:
       - stylus
       - supports-color
       - webpack
-    dev: true
-
-  /@picocss/pico/1.5.3:
-    resolution: {integrity: sha512-ZdZOxjlmj0BkpGpYo/ODgAcFpqIgpAACqEmIgpFtxHkam06ITfUfcj9+mPcd+Ti8Dh0KCSvHpmSnJA3+tOStlQ==}
     dev: true
 
   /@polka/url/1.0.0-next.21:

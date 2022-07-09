@@ -1,6 +1,6 @@
 <template>
-  <section>
-    <h1>Welcome to NEARmberle</h1>
+  <div class="container mx-auto p-4 bg-neutral text-neutral-content">
+    <h1 class="text-2xl font-bold">Welcome to NEARmberle</h1>
     <p>
       This is a tiny, incomplete clone of
       <a href="https://github.com/danielroe/n3rdle">n3dle</a> built in
@@ -13,5 +13,5 @@
         <Player />
       </WalletComponent>
     </ClientOnly>
-  </section>
+  </div>
 </template>

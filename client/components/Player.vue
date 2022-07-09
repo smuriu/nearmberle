@@ -8,22 +8,22 @@ const { data: stats, refresh, pending } = await useAsyncData('player', async () 
 })
 
 const playerId = computed(() => getAccountId())
-const play = () => {
-  useRouter().push('/game')
-}
 </script>
 
 <template>
   <div class="card bg-neutral text-neutral-content">
     <div class="card-body">
-      <h2 class="card-title">
-        {{ playerId }}
-        <button class="badge badge-outline" :aria-busy="pending" @click="refresh()">🔄</button>
-      </h2>
+      <div class="flex justify-between">
+        <span class="card-title">{{ playerId }}</span>
+        <div>
+          <button class="btn btn-sm btn-outline" :class="pending ? 'loading' : ''" @click="refresh()">⟳</button>
+        </div>
+      </div>
       <pre><code>{{ stats }}</code></pre>
       <div class="card-actions justify-end">
-        <button class="btn btn-primary" @click="play">Play</button>
-        <button class="btn btn-ghost" @click="signOut">Logout</button>
+        <NuxtLink class="btn btn-primary" :to="{
+          path: '/game'
+        }">Play</NuxtLink>
       </div>
     </div>
   </div>
