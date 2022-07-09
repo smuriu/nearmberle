@@ -5,6 +5,7 @@ const emit = defineEmits<{
 
 const { busy } = useNearmberle()
 const guess = ref('')
+const kbdInputDisabled = computed(() => guess.value.length > 7)
 
 const submitGuess = () => {
   if (!busy.value) {
@@ -13,9 +14,9 @@ const submitGuess = () => {
   }
 }
 
-const kbdClick = ({ target }) => {
+const onKbdInput = (value: string) => {
   if (guess.value.length < 8) {
-    guess.value += target.innerText
+    guess.value += value
   }
 }
 
@@ -34,28 +35,28 @@ const kbdBackspace = () => {
       </label>
       <div class="flex flex-col">
         <div class="flex justify-center gap-1 my-1 w-full">
-          <button :disabled="guess.length > 7 || busy" class="kbd" @click.stop="kbdClick" type="button">1</button>
-          <button :disabled="guess.length > 7 || busy" class="kbd" @click.stop="kbdClick" type="button">2</button>
-          <button :disabled="guess.length > 7 || busy" class="kbd" @click.stop="kbdClick" type="button">3</button>
-          <button :disabled="guess.length > 7 || busy" class="kbd" @click.stop="kbdClick" type="button">4</button>
-          <button :disabled="guess.length > 7 || busy" class="kbd" @click.stop="kbdClick" type="button">5</button>
+          <KbdButton :disabled="kbdInputDisabled" :busy="busy" :value="1" @kbd_input="onKbdInput" />
+          <KbdButton :disabled="kbdInputDisabled" :busy="busy" :value="2" @kbd_input="onKbdInput" />
+          <KbdButton :disabled="kbdInputDisabled" :busy="busy" :value="3" @kbd_input="onKbdInput" />
+          <KbdButton :disabled="kbdInputDisabled" :busy="busy" :value="4" @kbd_input="onKbdInput" />
+          <KbdButton :disabled="kbdInputDisabled" :busy="busy" :value="5" @kbd_input="onKbdInput" />
         </div>
         <div class="flex justify-center gap-1 my-1 w-full">
-          <button :disabled="guess.length > 7 || busy" class="kbd" @click.stop="kbdClick" type="button">6</button>
-          <button :disabled="guess.length > 7 || busy" class="kbd" @click.stop="kbdClick" type="button">7</button>
-          <button :disabled="guess.length > 7 || busy" class="kbd" @click.stop="kbdClick" type="button">8</button>
-          <button :disabled="guess.length > 7 || busy" class="kbd" @click.stop="kbdClick" type="button">9</button>
-          <button :disabled="guess.length > 7 || busy" class="kbd" @click.stop="kbdClick" type="button">0</button>
+          <KbdButton :disabled="kbdInputDisabled" :busy="busy" :value="6" @kbd_input="onKbdInput" />
+          <KbdButton :disabled="kbdInputDisabled" :busy="busy" :value="7" @kbd_input="onKbdInput" />
+          <KbdButton :disabled="kbdInputDisabled" :busy="busy" :value="8" @kbd_input="onKbdInput" />
+          <KbdButton :disabled="kbdInputDisabled" :busy="busy" :value="9" @kbd_input="onKbdInput" />
+          <KbdButton :disabled="kbdInputDisabled" :busy="busy" :value="0" @kbd_input="onKbdInput" />
         </div>
         <div class="flex justify-center gap-1 my-1 w-full">
-          <button :disabled="guess.length > 7 || busy" class="kbd" @click.stop="kbdClick" type="button">+</button>
-          <button :disabled="guess.length > 7 || busy" class="kbd" @click.stop="kbdClick" type="button">-</button>
-          <button :disabled="guess.length > 7 || busy" class="kbd" @click.stop="kbdClick" type="button">*</button>
-          <button :disabled="guess.length > 7 || busy" class="kbd" @click.stop="kbdClick" type="button">/</button>
-          <button :disabled="guess.length > 7 || busy" class="kbd" @click.stop="kbdClick" type="button">=</button>
+          <KbdButton :disabled="kbdInputDisabled" :busy="busy" :value="'+'" @kbd_input="onKbdInput" />
+          <KbdButton :disabled="kbdInputDisabled" :busy="busy" :value="'-'" @kbd_input="onKbdInput" />
+          <KbdButton :disabled="kbdInputDisabled" :busy="busy" :value="'*'" @kbd_input="onKbdInput" />
+          <KbdButton :disabled="kbdInputDisabled" :busy="busy" :value="'/'" @kbd_input="onKbdInput" />
+          <KbdButton :disabled="kbdInputDisabled" :busy="busy" :value="'='" @kbd_input="onKbdInput" />
         </div>
         <div class="flex justify-center gap-1 my-1 w-full">
-          <button :disabled="guess.length === 0" class="kbd" @click.stop="kbdBackspace" type="button">⇐</button>
+          <button :disabled="guess.length === 0" :aria-busy="busy" class="kbd" @click.stop="kbdBackspace" type="button">⇐</button>
           <button :disabled="guess.length !== 8" :aria-busy="busy" type="submit" class="kbd">Guess</button>
         </div>
       </div>
